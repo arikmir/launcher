@@ -186,8 +186,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ content, mock: false });
   } catch (error) {
     console.error("[Generate] Error:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Failed to generate copy" },
+      { error: "Failed to generate copy", details: errorMessage },
       { status: 500 }
     );
   }

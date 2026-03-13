@@ -38,6 +38,7 @@ export default function GeneratePage() {
   const [selectedPlatform, setSelectedPlatform] = useState<string | null>(null);
   const [generated, setGenerated] = useState<GeneratedContent | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleProductComplete = (data: ProductData) => {
     setProduct(data);
@@ -49,6 +50,7 @@ export default function GeneratePage() {
     
     setSelectedPlatform(platform);
     setLoading(true);
+    setError(null);
     setStep("generate");
 
     try {
@@ -67,10 +69,12 @@ export default function GeneratePage() {
           mock: data.mock,
         });
       } else {
-        console.error("Generation failed:", data.error);
+        console.error("Generation failed:", data);
+        setError(data.details || data.error || "Generation failed");
       }
-    } catch (error) {
-      console.error("Generation error:", error);
+    } catch (err) {
+      console.error("Generation error:", err);
+      setError(err instanceof Error ? err.message : "Network error");
     } finally {
       setLoading(false);
     }
@@ -185,13 +189,17 @@ export default function GeneratePage() {
                 </pre>
               </CardContent>
             </Card>
-          ) : (
+          ) : error ? (
             <Card>
-              <CardContent className="py-12 text-center text-muted-foreground">
-                Something went wrong. Please try again.
+              <CardContent className="py-12 text-center">
+                <p className="text-destructive font-medium">Something went wrong</p>
+                <p className="text-sm text-muted-foreground mt-2">{error}</p>
+                <Button className="mt-4" variant="outline" onClick={() => handleGenerate(selectedPlatform!)}>
+                  Try Again
+                </Button>
               </CardContent>
             </Card>
-          )}
+          ) : null}
         </div>
       )}
     </div>
