@@ -4,6 +4,7 @@ import { Features } from "@/components/landing/features";
 import { Pricing } from "@/components/landing/pricing";
 import { FAQ } from "@/components/landing/faq";
 import { CTA } from "@/components/landing/cta";
+import { Waitlist } from "@/components/landing/waitlist";
 
 export default function Home() {
   return (
@@ -25,18 +26,19 @@ export default function Home() {
             and Product Hunt in seconds. No more blank page anxiety.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <Button size="lg" asChild>
-              <Link href="/signup">Get Started Free</Link>
-            </Button>
+          <div className="mt-10 w-full max-w-md">
+            <Waitlist />
+          </div>
+
+          <p className="mt-6 text-sm text-muted-foreground">
+            Join 0 indie hackers on the waitlist
+          </p>
+
+          <div className="mt-6">
             <Button size="lg" variant="outline" asChild>
               <Link href="#features">See How It Works</Link>
             </Button>
           </div>
-
-          <p className="mt-6 text-sm text-muted-foreground">
-            No credit card required · 10 free generations
-          </p>
         </div>
       </section>
 
