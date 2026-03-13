@@ -8,7 +8,7 @@ export default function Home() {
       <section className="container max-w-screen-xl py-24 md:py-32">
         <div className="flex flex-col items-center text-center">
           <div className="inline-flex items-center rounded-full border border-border/60 bg-muted/50 px-4 py-1.5 text-sm font-medium text-muted-foreground mb-6">
-            🚀 Launch your product faster
+            Launch your product faster
           </div>
 
           <h1 className="max-w-4xl text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
