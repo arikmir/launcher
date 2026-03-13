@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Features } from "@/components/landing/features";
+import { Pricing } from "@/components/landing/pricing";
+import { FAQ } from "@/components/landing/faq";
+import { CTA } from "@/components/landing/cta";
 
 export default function Home() {
   return (
@@ -36,39 +40,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Placeholder for features, pricing, etc. */}
-      <section id="features" className="border-t border-border/40 bg-muted/30 py-24">
-        <div className="container max-w-screen-xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Platform-native copy in seconds
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Coming soon: Features section
-          </p>
-        </div>
-      </section>
+      {/* Features */}
+      <Features />
 
-      <section id="pricing" className="py-24">
-        <div className="container max-w-screen-xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Simple, transparent pricing
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Coming soon: Pricing section
-          </p>
-        </div>
-      </section>
+      {/* Pricing */}
+      <Pricing />
 
-      <section id="faq" className="border-t border-border/40 bg-muted/30 py-24">
-        <div className="container max-w-screen-xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Frequently asked questions
-          </h2>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Coming soon: FAQ section
-          </p>
-        </div>
-      </section>
+      {/* FAQ */}
+      <FAQ />
+
+      {/* CTA */}
+      <CTA />
     </div>
   );
 }
