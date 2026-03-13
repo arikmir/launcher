@@ -6,26 +6,48 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/client";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const supabase = createClient();
 
-  const handleGoogleSignup = () => {
-    // TODO: Implement with Supabase
-    alert("Google signup coming soon! Set up Supabase first.");
+  const handleGoogleSignup = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    if (error) {
+      setMessage(error.message);
+      setLoading(false);
+    }
   };
 
   const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
+
     setLoading(true);
-    // TODO: Implement with Supabase
-    setTimeout(() => {
-      alert("Magic link coming soon! Set up Supabase first.");
-      setLoading(false);
-    }, 500);
+    setMessage("");
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      setMessage(error.message);
+    } else {
+      setMessage("Check your email for the magic link!");
+    }
+    setLoading(false);
   };
 
   return (
@@ -43,6 +65,7 @@ export default function SignupPage() {
             variant="outline"
             className="w-full"
             onClick={handleGoogleSignup}
+            disabled={loading}
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
               <path
@@ -86,12 +109,19 @@ export default function SignupPage() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Sending..." : "Send Magic Link"}
             </Button>
           </form>
+
+          {message && (
+            <p className={`text-sm text-center ${message.includes("Check") ? "text-green-600" : "text-destructive"}`}>
+              {message}
+            </p>
+          )}
 
           <p className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}

@@ -2,30 +2,54 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+  const supabase = createClient();
 
-  const handleGoogleLogin = () => {
-    // TODO: Implement with Supabase
-    alert("Google login coming soon! Set up Supabase first.");
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+    if (error) {
+      setMessage(error.message);
+      setLoading(false);
+    }
   };
 
   const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
-    
+
     setLoading(true);
-    // TODO: Implement with Supabase
-    setTimeout(() => {
-      alert("Magic link coming soon! Set up Supabase first.");
-      setLoading(false);
-    }, 500);
+    setMessage("");
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
+    });
+
+    if (error) {
+      setMessage(error.message);
+    } else {
+      setMessage("Check your email for the magic link!");
+    }
+    setLoading(false);
   };
 
   return (
@@ -43,6 +67,7 @@ export default function LoginPage() {
             variant="outline"
             className="w-full"
             onClick={handleGoogleLogin}
+            disabled={loading}
           >
             <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
               <path
@@ -86,12 +111,19 @@ export default function LoginPage() {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Sending..." : "Send Magic Link"}
             </Button>
           </form>
+
+          {message && (
+            <p className={`text-sm text-center ${message.includes("Check") ? "text-green-600" : "text-destructive"}`}>
+              {message}
+            </p>
+          )}
 
           <p className="text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
