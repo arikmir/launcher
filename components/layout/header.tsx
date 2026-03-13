@@ -11,6 +11,12 @@ export function Header() {
 
         <nav className="hidden md:flex items-center gap-6">
           <Link
+            href="/generate"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Generate
+          </Link>
+          <Link
             href="#features"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
