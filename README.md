@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Launcher
+
+AI-powered launch copy for indie hackers.
+
+Generate ready-to-post content for Twitter, Reddit, Hacker News, and Product Hunt in seconds.
+
+## Features
+
+- **Platform-native copy** — Each platform has different rules. We bake them in.
+- **Twitter threads** — Hook-first tweets that grab attention. No hashtags.
+- **Reddit posts** — Problem-led posts that don't get flagged as self-promo.
+- **Hacker News** — Technical depth with humble tone. Show HN format.
+- **Product Hunt** — 60-char taglines, maker stories, and topic tags.
+- **Channel recommendations** — AI suggests the best platforms for your product.
+
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router)
+- **Styling:** Tailwind CSS v4 + shadcn/ui
+- **AI:** OpenAI GPT-4o-mini
+- **Auth:** Supabase (coming soon)
+- **Payments:** Stripe (coming soon)
+- **Deployment:** Vercel
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Clone the repo
+git clone https://github.com/arikmir/launcher.git
+cd launcher
+
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+# Add your OPENAI_API_KEY
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+OPENAI_API_KEY=sk-...
+# SUPABASE_URL=https://...
+# SUPABASE_ANON_KEY=...
+# STRIPE_SECRET_KEY=sk_...
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── page.tsx              # Landing page
+├── generate/             # Copy generation
+├── dashboard/            # User dashboard
+│   └── history/          # Generation history
+├── pricing/              # Pricing page
+├── login/                # Login page
+├── signup/               # Signup page
+└── api/
+    ├── generate/         # AI generation endpoint
+    └── waitlist/         # Waitlist signup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+components/
+├── landing/              # Landing page sections
+├── layout/               # Header, footer
+├── onboarding/           # Product form
+└── ui/                   # shadcn/ui components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+lib/
+├── openai.ts             # OpenAI client
+├── prompts.ts            # Platform-specific prompts
+└── utils.ts              # Utilities
+```
 
-## Deploy on Vercel
+## Design Principles
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Clean & Confident (Linear/Vercel style)
+- Primary color: Deep Orange (#EA580C)
+- Font: Geist
+- NO emojis
+- NO purple gradients
+- NO cards nested in cards
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+MIT
+
+---
+
+Built by [@arikmir](https://github.com/arikmir)
